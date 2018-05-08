@@ -180,6 +180,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\APIController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -303,6 +304,11 @@
     <Content Include="Views\Wallet\Send.cshtml" />
     <Content Include="Views\Wallet\History.cshtml" />
     <Content Include="Views\User\NoPremission.cshtml" />
+    <Content Include="Views\API\Balance.cshtml" />
+    <Content Include="Views\API\Faucet.cshtml" />
+    <Content Include="Views\API\GenerateAddress.cshtml" />
+    <Content Include="Views\API\Send.cshtml" />
+    <Content Include="Views\API\Transactions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
