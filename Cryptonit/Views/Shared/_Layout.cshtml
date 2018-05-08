@@ -31,25 +31,59 @@
         </button>
 
         <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav">
+                @if (Session["UserID"] != null)
+                 {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Wallet/Index">Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Wallet/Send">Send</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Wallet/MyAddresses">Addresses</a>
+                    </li>
+                 }
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Balance <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Home/Contact">Courses</a>
+                    <a class="nav-link" href="/Home/Contact">Contact</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/Home/About">About</a>
                 </li>
             </ul>
-
             <ul class="navbar-nav mr-auto container">
+                @if (Session["UserLogin"] != null)
+                {
+
+
                 <li class="nav-item ml-auto">
-                    <a class="nav-link" href="/User/Login">Login</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @Session["UserLogin"]
+                    </a>
+
+                    @using (Html.BeginForm("LogOut", "Home", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                         @Html.AntiForgeryToken()
+
+                            <div class="dropdown-menu dropdown-menu-right ma-dropdown-tray" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+                            </div>
+                    }
+
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/User/Register">Sign Up</a>
-                </li>
+
+
+            }
+            else
+            {
+            <li class="nav-item ml-auto">
+                <a class="nav-link" href="/User/Login">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/User/Register">Sign Up</a>
+            </li>
+             }
+
             </ul>
 
         </div>

@@ -24,7 +24,10 @@ namespace Cryptonit.Controllers
         {
             return View();
         }
-
+        public ActionResult noPremission()
+        {
+            return View();
+        }
         [HttpPost]
         public ActionResult Register( Users user)
         {
@@ -107,7 +110,7 @@ namespace Cryptonit.Controllers
                         {
                             Session["UserID"] = u.Id.ToString();
                             Session["UserLogin"] = u.login;
-                            return RedirectToAction("LoggedIn");
+                            return Redirect("~/Wallet/Index");
                         }
                     }  
                 }
@@ -115,6 +118,7 @@ namespace Cryptonit.Controllers
             ModelState.AddModelError("LoginError", "Login or Password is wrong.");
             return View();
         }
+
         public ActionResult LoggedIn()
         {
             if(Session["UserID"]!=null)

@@ -300,6 +300,9 @@
     <Content Include="Views\User\LoggedIn.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\Wallet\Send.cshtml" />
+    <Content Include="Views\Wallet\History.cshtml" />
+    <Content Include="Views\User\NoPremission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

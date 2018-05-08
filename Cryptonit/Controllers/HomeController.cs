@@ -32,5 +32,12 @@ namespace Cryptonit.Controllers
 
             return View();
         }
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            return RedirectToAction("Index");
+        }
+
     }
 }
