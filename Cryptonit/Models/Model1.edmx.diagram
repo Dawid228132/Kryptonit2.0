@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c9f7fd75001745b889c8fa591d0bdbe7" Name="Diagram1">
+        <EntityTypeShape EntityType="CryptonitModel.Address" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptonitModel.Currency" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptonitModel.PublicKey" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptonitModel.Recipient" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptonitModel.Signature" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptonitModel.Transaction" Width="1.5" PointX="5.25" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptonitModel.TransactionStatus" Width="1.5" PointX="3" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptonitModel.UserContact" Width="1.5" PointX="8.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CryptonitModel.Users" Width="1.5" PointX="3" PointY="16.625" IsExpanded="true" />
+        <AssociationConnector Association="CryptonitModel.FK__Address__Currenc__51300E55" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptonitModel.FK__Address__Currenc__531856C7" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptonitModel.FK__Address__PublicK__5224328E" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptonitModel.FK__Address__PublicK__540C7B00" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptonitModel.FK__Address__Signatu__4F47C5E3" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptonitModel.FK__Address__UserId__503BEA1C" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptonitModel.FK__Recipient__Curre__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptonitModel.FK__UserConta__Curre__3C34F16F" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptonitModel.FK__Recipient__Publi__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptonitModel.FK__Transacti__Trans__03F0984C" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptonitModel.FK__Transacti__UserI__02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptonitModel.FK__UserConta__UserI__3B40CD36" ManuallyRouted="false" />
+        <AssociationConnector Association="CryptonitModel.UserCurrency" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

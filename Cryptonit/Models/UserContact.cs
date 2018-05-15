@@ -19,10 +19,8 @@ namespace Cryptonit.Models
         public int CurrencyId { get; set; }
         public string ContactName { get; set; }
         public int UserId { get; set; }
-        public int PublicKeyId { get; set; }
     
         public virtual Currency Currency { get; set; }
-        public virtual PublicKey PublicKey { get; set; }
         public virtual Users Users { get; set; }
     }
 }
