@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using BlockCypher;
+using System.Threading.Tasks;
 
 namespace Cryptonit.Controllers
 {
@@ -37,6 +39,7 @@ namespace Cryptonit.Controllers
                 {
                     bool isEmail = IsEmailExist(user.email);
                     bool isLogin = IsLoginExist(user.login);
+                   
                     if(isLogin)
                     {
                         ModelState.AddModelError("LoginExist", "Login already exist.");
@@ -64,6 +67,27 @@ namespace Cryptonit.Controllers
             }
             return View();
 
+        }
+        private async Task<List<string>> GenerateAddress()
+        {
+            List<string> listOfKeys = new List<string>();
+            
+            Blockcypher bc = new Blockcypher("1b4ed7ee7ddb4f918e93717945474e4e");
+            var request = await bc.GenerateAddress();
+
+            string address = request.Address;
+            string publicKey = request.Public;
+            string privateKey = request.Private;
+
+            //ViewData["Address"] = address;
+            //ViewData["Public"] = publicKey;
+            //ViewData["Private"] = privateKey;
+
+            listOfKeys.Add(address);
+            listOfKeys.Add(publicKey);
+            listOfKeys.Add(privateKey);
+
+            return listOfKeys;
         }
        [NonAction]
         public bool IsEmailExist(string email)
