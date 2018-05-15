@@ -132,7 +132,7 @@ namespace Cryptonit.Controllers
                     {
                         if (u.login==user.login&& HashPassword.hash(user.password,u.salt)==u.password)
                         {
-                            Session["UserID"] = u.Id.ToString();
+                            Session["UserID"] = u.Id;
                             Session["UserLogin"] = u.login;
                             return Redirect("~/Wallet/Index");
                         }

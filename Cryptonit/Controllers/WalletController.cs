@@ -21,7 +21,30 @@ namespace Cryptonit.Controllers
         {
             if (!Premission())
                 return Redirect("~/User/NoPremission");
+
             return View();
+            
+        }
+        [HttpPost]
+        public ActionResult AddNewAddress(String ContactName, String ContactAddress, String Currency)
+        {
+            using (Entities db = new Entities())
+            {
+                
+                UserContact contact = new UserContact();
+                contact.CurrencyId = Int32.Parse(Currency);
+                contact.ContactAddress = ContactAddress;
+                contact.ContactName = ContactName;
+                contact.UserId = (int) Session["UserID"];
+                db.UserContact.Add(contact);
+                db.SaveChanges();
+
+                ViewBag.Message = "success";
+
+            }
+           
+            return View();
+
         }
         public ActionResult MyAddresses()
         {
