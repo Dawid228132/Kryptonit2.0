@@ -16,6 +16,7 @@ namespace Cryptonit.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public string Address1 { get; set; }
         public int CurrencyId { get; set; }
         public int PublicKeyId { get; set; }
         public int SignatureId { get; set; }

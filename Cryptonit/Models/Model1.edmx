@@ -4,13 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CryptonitModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CryptonitModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="CurrencyId" Type="int" Nullable="false" />
           <Property Name="PublicKeyId" Type="int" Nullable="false" />
           <Property Name="SignatureId" Type="int" Nullable="false" />
@@ -72,7 +73,6 @@
           <Property Name="CurrencyId" Type="int" Nullable="false" />
           <Property Name="ContactName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="PublicKeyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserCurrency">
           <Key>
@@ -94,7 +94,7 @@
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="salt" Type="varchar" MaxLength="25" />
         </EntityType>
-        <Association Name="FK__Address__Currenc__7C4F7684">
+        <Association Name="FK__Address__Currenc__51300E55">
           <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -106,7 +106,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Address__Currenc__7E37BEF6">
+        <Association Name="FK__Address__Currenc__531856C7">
           <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -118,7 +118,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Address__PublicK__7D439ABD">
+        <Association Name="FK__Address__PublicK__5224328E">
           <End Role="PublicKey" Type="Self.PublicKey" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -130,7 +130,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Address__PublicK__7F2BE32F">
+        <Association Name="FK__Address__PublicK__540C7B00">
           <End Role="PublicKey" Type="Self.PublicKey" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -142,7 +142,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Address__Signatu__14270015">
+        <Association Name="FK__Address__Signatu__4F47C5E3">
           <End Role="Signature" Type="Self.Signature" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -154,7 +154,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Address__UserId__7B5B524B">
+        <Association Name="FK__Address__UserId__503BEA1C">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -226,18 +226,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserConta__Publi__3A4CA8FD">
-          <End Role="PublicKey" Type="Self.PublicKey" Multiplicity="1" />
-          <End Role="UserContact" Type="Self.UserContact" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PublicKey">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserContact">
-              <PropertyRef Name="PublicKeyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__UserConta__UserI__3B40CD36">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="UserContact" Type="Self.UserContact" Multiplicity="*" />
@@ -285,27 +273,27 @@
           <EntitySet Name="UserContact" EntityType="Self.UserContact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserCurrency" EntityType="Self.UserCurrency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Address__Currenc__7C4F7684" Association="Self.FK__Address__Currenc__7C4F7684">
+          <AssociationSet Name="FK__Address__Currenc__51300E55" Association="Self.FK__Address__Currenc__51300E55">
             <End Role="Currency" EntitySet="Currency" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Address__Currenc__7E37BEF6" Association="Self.FK__Address__Currenc__7E37BEF6">
+          <AssociationSet Name="FK__Address__Currenc__531856C7" Association="Self.FK__Address__Currenc__531856C7">
             <End Role="Currency" EntitySet="Currency" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Address__PublicK__7D439ABD" Association="Self.FK__Address__PublicK__7D439ABD">
+          <AssociationSet Name="FK__Address__PublicK__5224328E" Association="Self.FK__Address__PublicK__5224328E">
             <End Role="PublicKey" EntitySet="PublicKey" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Address__PublicK__7F2BE32F" Association="Self.FK__Address__PublicK__7F2BE32F">
+          <AssociationSet Name="FK__Address__PublicK__540C7B00" Association="Self.FK__Address__PublicK__540C7B00">
             <End Role="PublicKey" EntitySet="PublicKey" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Address__Signatu__14270015" Association="Self.FK__Address__Signatu__14270015">
+          <AssociationSet Name="FK__Address__Signatu__4F47C5E3" Association="Self.FK__Address__Signatu__4F47C5E3">
             <End Role="Signature" EntitySet="Signature" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Address__UserId__7B5B524B" Association="Self.FK__Address__UserId__7B5B524B">
+          <AssociationSet Name="FK__Address__UserId__503BEA1C" Association="Self.FK__Address__UserId__503BEA1C">
             <End Role="Users" EntitySet="Users" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
@@ -329,10 +317,6 @@
             <End Role="Currency" EntitySet="Currency" />
             <End Role="UserContact" EntitySet="UserContact" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserConta__Publi__3A4CA8FD" Association="Self.FK__UserConta__Publi__3A4CA8FD">
-            <End Role="PublicKey" EntitySet="PublicKey" />
-            <End Role="UserContact" EntitySet="UserContact" />
-          </AssociationSet>
           <AssociationSet Name="FK__UserConta__UserI__3B40CD36" Association="Self.FK__UserConta__UserI__3B40CD36">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserContact" EntitySet="UserContact" />
@@ -346,7 +330,8 @@
             <End Role="UserCurrency" EntitySet="UserCurrency" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CryptonitModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -356,15 +341,16 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CurrencyId" Type="Int32" Nullable="false" />
           <Property Name="PublicKeyId" Type="Int32" Nullable="false" />
           <Property Name="SignatureId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Currency" Relationship="Self.FK__Address__Currenc__7C4F7684" FromRole="Address" ToRole="Currency" />
-          <NavigationProperty Name="Currency1" Relationship="Self.FK__Address__Currenc__7E37BEF6" FromRole="Address" ToRole="Currency" />
-          <NavigationProperty Name="PublicKey" Relationship="Self.FK__Address__PublicK__7D439ABD" FromRole="Address" ToRole="PublicKey" />
-          <NavigationProperty Name="PublicKey1" Relationship="Self.FK__Address__PublicK__7F2BE32F" FromRole="Address" ToRole="PublicKey" />
-          <NavigationProperty Name="Signature" Relationship="Self.FK__Address__Signatu__14270015" FromRole="Address" ToRole="Signature" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Address__UserId__7B5B524B" FromRole="Address" ToRole="Users" />
+          <NavigationProperty Name="Currency" Relationship="Self.FK__Address__Currenc__51300E55" FromRole="Address" ToRole="Currency" />
+          <NavigationProperty Name="Currency1" Relationship="Self.FK__Address__Currenc__531856C7" FromRole="Address" ToRole="Currency" />
+          <NavigationProperty Name="PublicKey" Relationship="Self.FK__Address__PublicK__5224328E" FromRole="Address" ToRole="PublicKey" />
+          <NavigationProperty Name="PublicKey1" Relationship="Self.FK__Address__PublicK__540C7B00" FromRole="Address" ToRole="PublicKey" />
+          <NavigationProperty Name="Signature" Relationship="Self.FK__Address__Signatu__4F47C5E3" FromRole="Address" ToRole="Signature" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Address__UserId__503BEA1C" FromRole="Address" ToRole="Users" />
         </EntityType>
         <EntityType Name="Currency">
           <Key>
@@ -373,8 +359,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Abbreviation" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Address__Currenc__7C4F7684" FromRole="Currency" ToRole="Address" />
-          <NavigationProperty Name="Address1" Relationship="Self.FK__Address__Currenc__7E37BEF6" FromRole="Currency" ToRole="Address" />
+          <NavigationProperty Name="Address" Relationship="Self.FK__Address__Currenc__51300E55" FromRole="Currency" ToRole="Address" />
+          <NavigationProperty Name="Address1" Relationship="Self.FK__Address__Currenc__531856C7" FromRole="Currency" ToRole="Address" />
           <NavigationProperty Name="Recipient" Relationship="Self.FK__Recipient__Curre__74AE54BC" FromRole="Currency" ToRole="Recipient" />
           <NavigationProperty Name="UserContact" Relationship="Self.FK__UserConta__Curre__3C34F16F" FromRole="Currency" ToRole="UserContact" />
           <NavigationProperty Name="Users" Relationship="Self.UserCurrency" FromRole="Currency" ToRole="Users" />
@@ -385,10 +371,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HashCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Address__PublicK__7D439ABD" FromRole="PublicKey" ToRole="Address" />
-          <NavigationProperty Name="Address1" Relationship="Self.FK__Address__PublicK__7F2BE32F" FromRole="PublicKey" ToRole="Address" />
+          <NavigationProperty Name="Address" Relationship="Self.FK__Address__PublicK__5224328E" FromRole="PublicKey" ToRole="Address" />
+          <NavigationProperty Name="Address1" Relationship="Self.FK__Address__PublicK__540C7B00" FromRole="PublicKey" ToRole="Address" />
           <NavigationProperty Name="Recipient" Relationship="Self.FK__Recipient__Publi__75A278F5" FromRole="PublicKey" ToRole="Recipient" />
-          <NavigationProperty Name="UserContact" Relationship="Self.FK__UserConta__Publi__3A4CA8FD" FromRole="PublicKey" ToRole="UserContact" />
         </EntityType>
         <EntityType Name="Recipient">
           <Key>
@@ -407,7 +392,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HashCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Address__Signatu__14270015" FromRole="Signature" ToRole="Address" />
+          <NavigationProperty Name="Address" Relationship="Self.FK__Address__Signatu__4F47C5E3" FromRole="Signature" ToRole="Address" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -438,9 +423,7 @@
           <Property Name="CurrencyId" Type="Int32" Nullable="false" />
           <Property Name="ContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="PublicKeyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Currency" Relationship="Self.FK__UserConta__Curre__3C34F16F" FromRole="UserContact" ToRole="Currency" />
-          <NavigationProperty Name="PublicKey" Relationship="Self.FK__UserConta__Publi__3A4CA8FD" FromRole="UserContact" ToRole="PublicKey" />
           <NavigationProperty Name="Users" Relationship="Self.FK__UserConta__UserI__3B40CD36" FromRole="UserContact" ToRole="Users" />
         </EntityType>
         <EntityType Name="Users">
@@ -454,12 +437,12 @@
           <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="salt" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Address__UserId__7B5B524B" FromRole="Users" ToRole="Address" />
+          <NavigationProperty Name="Address" Relationship="Self.FK__Address__UserId__503BEA1C" FromRole="Users" ToRole="Address" />
           <NavigationProperty Name="Transaction" Relationship="Self.FK__Transacti__UserI__02084FDA" FromRole="Users" ToRole="Transaction" />
           <NavigationProperty Name="UserContact" Relationship="Self.FK__UserConta__UserI__3B40CD36" FromRole="Users" ToRole="UserContact" />
           <NavigationProperty Name="Currency" Relationship="Self.UserCurrency" FromRole="Users" ToRole="Currency" />
         </EntityType>
-        <Association Name="FK__Address__Currenc__7C4F7684">
+        <Association Name="FK__Address__Currenc__51300E55">
           <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -471,7 +454,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Address__Currenc__7E37BEF6">
+        <Association Name="FK__Address__Currenc__531856C7">
           <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -483,7 +466,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Address__PublicK__7D439ABD">
+        <Association Name="FK__Address__PublicK__5224328E">
           <End Role="PublicKey" Type="Self.PublicKey" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -495,7 +478,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Address__PublicK__7F2BE32F">
+        <Association Name="FK__Address__PublicK__540C7B00">
           <End Role="PublicKey" Type="Self.PublicKey" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -507,7 +490,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Address__Signatu__14270015">
+        <Association Name="FK__Address__Signatu__4F47C5E3">
           <End Role="Signature" Type="Self.Signature" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -519,7 +502,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Address__UserId__7B5B524B">
+        <Association Name="FK__Address__UserId__503BEA1C">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -563,18 +546,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Recipient">
-              <PropertyRef Name="PublicKeyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UserConta__Publi__3A4CA8FD">
-          <End Role="PublicKey" Type="Self.PublicKey" Multiplicity="1" />
-          <End Role="UserContact" Type="Self.UserContact" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PublicKey">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserContact">
               <PropertyRef Name="PublicKeyId" />
             </Dependent>
           </ReferentialConstraint>
@@ -629,27 +600,27 @@
           <EntitySet Name="TransactionStatus" EntityType="Self.TransactionStatus" />
           <EntitySet Name="UserContact" EntityType="Self.UserContact" />
           <EntitySet Name="Users" EntityType="Self.Users" />
-          <AssociationSet Name="FK__Address__Currenc__7C4F7684" Association="Self.FK__Address__Currenc__7C4F7684">
+          <AssociationSet Name="FK__Address__Currenc__51300E55" Association="Self.FK__Address__Currenc__51300E55">
             <End Role="Currency" EntitySet="Currency" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Address__Currenc__7E37BEF6" Association="Self.FK__Address__Currenc__7E37BEF6">
+          <AssociationSet Name="FK__Address__Currenc__531856C7" Association="Self.FK__Address__Currenc__531856C7">
             <End Role="Currency" EntitySet="Currency" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Address__PublicK__7D439ABD" Association="Self.FK__Address__PublicK__7D439ABD">
+          <AssociationSet Name="FK__Address__PublicK__5224328E" Association="Self.FK__Address__PublicK__5224328E">
             <End Role="PublicKey" EntitySet="PublicKey" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Address__PublicK__7F2BE32F" Association="Self.FK__Address__PublicK__7F2BE32F">
+          <AssociationSet Name="FK__Address__PublicK__540C7B00" Association="Self.FK__Address__PublicK__540C7B00">
             <End Role="PublicKey" EntitySet="PublicKey" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Address__Signatu__14270015" Association="Self.FK__Address__Signatu__14270015">
+          <AssociationSet Name="FK__Address__Signatu__4F47C5E3" Association="Self.FK__Address__Signatu__4F47C5E3">
             <End Role="Signature" EntitySet="Signature" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Address__UserId__7B5B524B" Association="Self.FK__Address__UserId__7B5B524B">
+          <AssociationSet Name="FK__Address__UserId__503BEA1C" Association="Self.FK__Address__UserId__503BEA1C">
             <End Role="Users" EntitySet="Users" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
@@ -664,10 +635,6 @@
           <AssociationSet Name="FK__Recipient__Publi__75A278F5" Association="Self.FK__Recipient__Publi__75A278F5">
             <End Role="PublicKey" EntitySet="PublicKey" />
             <End Role="Recipient" EntitySet="Recipient" />
-          </AssociationSet>
-          <AssociationSet Name="FK__UserConta__Publi__3A4CA8FD" Association="Self.FK__UserConta__Publi__3A4CA8FD">
-            <End Role="PublicKey" EntitySet="PublicKey" />
-            <End Role="UserContact" EntitySet="UserContact" />
           </AssociationSet>
           <AssociationSet Name="FK__Transacti__Trans__03F0984C" Association="Self.FK__Transacti__Trans__03F0984C">
             <End Role="TransactionStatus" EntitySet="TransactionStatus" />
@@ -697,6 +664,7 @@
               <MappingFragment StoreEntitySet="Address">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Address1" ColumnName="Address" />
                 <ScalarProperty Name="CurrencyId" ColumnName="CurrencyId" />
                 <ScalarProperty Name="PublicKeyId" ColumnName="PublicKeyId" />
                 <ScalarProperty Name="SignatureId" ColumnName="SignatureId" />
@@ -765,7 +733,6 @@
                 <ScalarProperty Name="CurrencyId" ColumnName="CurrencyId" />
                 <ScalarProperty Name="ContactName" ColumnName="ContactName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="PublicKeyId" ColumnName="PublicKeyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

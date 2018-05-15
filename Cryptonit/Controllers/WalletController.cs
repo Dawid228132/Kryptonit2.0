@@ -48,7 +48,7 @@ namespace Cryptonit.Controllers
         {
             if (Session["UserId"] != null)
                 return true;
-            return false;
+            return true;
         }
     }
 }
