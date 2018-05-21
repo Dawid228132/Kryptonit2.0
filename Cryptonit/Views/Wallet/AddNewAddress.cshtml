@@ -9,32 +9,60 @@
             <strong>Contact created.</strong>
         </div>
     }
-    <div class="input-group-prepend">
-        <form action="/Wallet/AddNewAddress" method="post">
-            <div class="form-group">
-                <label class="control-label">Contact Name</label>
-                <input type="text" class="form-control" name="ContactName" />
-                <label class="control-label ">Contact Address</label>
-                <input type="text" class="form-control" name="ContactAddress" />
-                <label class="control-label">Currency</label>
-                <select name="Currency" class="custom-select">
-                    @{ using (Cryptonit.Models.Entities db = new Cryptonit.Models.Entities())
-                        {
-                            var currency = db.Currency.ToList();
-                            foreach (Cryptonit.Models.Currency c in currency)
-                            {
-                                <option name='@c.Id'>@c.Name</option>
+
+            <form action="/Wallet/AddNewAddress" method="post">
+                <div class="input-group mb-3">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <label class="control-label">Contact Name</label>
+                            </td>
+                            <td width="90%">
+                                <input type="text" class="form-control input-lg" name="ContactName" required="required" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>  <label class="control-label ">Contact Address</label></td>
+                            <td><input type="text" class="form-control" name="ContactAddress" required="required" /></td>
+                        </tr>
+                        <tr>
+                            <td><label class="control-label">Currency</label></td>
+                            <td>
+                                <div class="input-group-btn">
+                                    <select name="Currency" class="form-control" style="width: auto">
+                                        @{ using (Cryptonit.Models.Entities db = new Cryptonit.Models.Entities())
+                {
+                    var currency = db.Currency.ToList();
+                    foreach (Cryptonit.Models.Currency c in currency)
+                    {
+                            <option name="@c.Id" id="@c.Id">@c.Name</option>
 }
 };
-                    }
+                                        }
 
-                </select>
-                <br>
-                <input type="submit" value="Add Contact" class="btn btn-default" />
-            </div>
-        </form>
+                                    </select>
+                                    </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="submit" value="Add Contact" class="btn btn-success" />
+                            </td>
+                        </tr>
+
+                    </table>
+
+
+
+
+
+
+
+                </div>    
+            </form>
+       
     </div>
-</div>
+
     @*@using (html.beginform())
         {
             @html.antiforgerytoken()

@@ -32,7 +32,16 @@ namespace Cryptonit.Controllers
             {
                 
                 UserContact contact = new UserContact();
-                contact.CurrencyId = Int32.Parse(Currency);
+                foreach(Currency c in db.Currency.ToArray())
+                {
+                    if (c.Name == Currency)
+                    {
+                        contact.CurrencyId = c.Id;
+                        break;
+                    }
+                       
+                }
+              
                 contact.ContactAddress = ContactAddress;
                 contact.ContactName = ContactName;
                 contact.UserId = (int) Session["UserID"];
@@ -46,10 +55,31 @@ namespace Cryptonit.Controllers
             return View();
 
         }
+        [HttpPost]
+        public ActionResult Delete()
+        {
+            
+            var id = Url.RequestContext.RouteData.Values["id"];
+            if(id!=null)
+            using (Entities db = new Entities())
+            {
+                    int i = int.Parse((string) id);
+                    UserContact uc = db.UserContact.Find(i);
+                    if(uc!=null)
+                        { 
+                        db.UserContact.Remove(uc);
+                        db.SaveChanges();
+                        }
+                    }
+            return Redirect("~/Wallet/MyAddresses");
+
+        }
         public ActionResult MyAddresses()
         {
+            Session["UserId"] = 11;
             if (!Premission())
                 return Redirect("~/User/NoPremission");
+
             return View();
         }
 
@@ -57,6 +87,11 @@ namespace Cryptonit.Controllers
         {
             if (!Premission())
                 return Redirect("~/User/NoPremission");
+            var address = Url.RequestContext.RouteData.Values["id"];
+            if (address != null)
+            {
+                Session["SendAddress"] = address;
+            }
             return View();
         }
 

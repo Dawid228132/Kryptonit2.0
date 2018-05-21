@@ -2,49 +2,84 @@
 @{
     ViewBag.Title = "Login";
 }
+<script>
+    function deleteAddress() {
+        var r = confirm("Delete address?" );
+    if (r == true) {
+        return true;
+        } 
+    return false;
+}
+</script>
 
 <h2>My Addresses:</h2>
+
 <div class="jumbotron">
     <table class="table">
         <tr>
-            <td>
-                Adress Name
-            </td>
-            <td width="50%">
-                Adress
-            </td>
-
-            <td>
-                <input type="button" class="btn btn-success" value="Send Currency">
-                <input type="button" class="btn btn-success" value="Show History">
+            <td colspan="5" align="right">
+                <form action="/Wallet/AddNewAddress" method="get">
+                    <input type="submit" class="btn btn-success" value="Add New Address">
+                </form>
             </td>
         </tr>
         <tr>
             <td>
-                Adress Name
+                Name
             </td>
             <td width="50%">
-                Adress
+                Address
             </td>
-
+            <td width="5%">
+                Currency
+            </td>
             <td>
-                <input type="button" class="btn btn-success" value="Send Currency">
-                <input type="button" class="btn btn-success" value="Show History">
+                Option
             </td>
         </tr>
+        @{using (Cryptonit.Models.Entities db = new Cryptonit.Models.Entities())
+            {
+                var userContacts = db.Users.Find(Session["UserId"]).UserContact;
+                foreach (Cryptonit.Models.UserContact uc in userContacts)
+                {
         <tr>
             <td>
-                Adress Name
+                @uc.ContactName
             </td>
             <td width="50%">
-                Adress
+                @uc.ContactAddress
             </td>
-
+            <td width="5%">
+                @uc.Currency.Abbreviation
+            </td>
             <td>
-                <input type="button" class="btn btn-success" value="Send Currency">
-                <input type="button" class="btn btn-success" value="Show History">
+                <form action="/Wallet/Send/@uc.ContactAddress" method="get">
+                    <input type="submit" class="btn btn-success" value="Send Currency">
+                </form>
+            </td>
+            <td>
+                <form action="/Wallet/History/@uc.ContactAddress" method="get">
+                    <input type="submit" class="btn btn-success" value="Show History">
+                </form>
+            </td>
+            <td>
+                <form action="/Wallet/Delete/@uc.Id" onsubmit="return deleteAddress()" method="post">
+                    <input type="submit" class="btn btn-danger" value="Delete" />
+                </form>
+
+
             </td>
         </tr>
+                    }
+                }
+            }
+
+
+
+
+
+
+
     </table>
 
 </div>
