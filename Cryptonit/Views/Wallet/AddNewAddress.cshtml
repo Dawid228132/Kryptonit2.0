@@ -1,47 +1,108 @@
-﻿@model Cryptonit.Models.UserContact
+﻿
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>UserContact</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ContactName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ContactName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ContactName, "", new { @class = "text-danger" })
+<div class="container">
+    <h4>Add new Contact</h4>
+    @if (ViewBag.Message == "success")
+    {
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Contact created.</strong>
         </div>
-    </div>
+    }
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.ContactAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ContactAddress, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ContactAddress, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.CurrencyId, "CurrencyId", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("CurrencyId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.CurrencyId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
-</div>
+            <form action="/Wallet/AddNewAddress" method="post">
+                <div class="input-group mb-3">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <label class="control-label">Contact Name</label>
+                            </td>
+                            <td width="90%">
+                                <input type="text" class="form-control input-lg" name="ContactName" required="required" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>  <label class="control-label ">Contact Address</label></td>
+                            <td><input type="text" class="form-control" name="ContactAddress" required="required" /></td>
+                        </tr>
+                        <tr>
+                            <td><label class="control-label">Currency</label></td>
+                            <td>
+                                <div class="input-group-btn">
+                                    <select name="Currency" class="form-control" style="width: auto">
+                                        @{ using (Cryptonit.Models.Entities db = new Cryptonit.Models.Entities())
+                {
+                    var currency = db.Currency.ToList();
+                    foreach (Cryptonit.Models.Currency c in currency)
+                    {
+                            <option name="@c.Id" id="@c.Id">@c.Name</option>
 }
+};
+                                        }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+                                    </select>
+                                    </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="submit" value="Add Contact" class="btn btn-success" />
+                            </td>
+                        </tr>
+
+                    </table>
+
+
+
+
+
+
+
+                </div>    
+            </form>
+       
+    </div>
+
+    @*@using (html.beginform())
+        {
+            @html.antiforgerytoken()
+
+        <div class="form-horizontal">
+            <h4>usercontact</h4>
+            <hr />
+            @html.validationsummary(true, "", new { @class = "text-danger" })
+
+
+            <div class="form-group">
+                @html.labelfor(model => model.contactname, htmlattributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @html.editorfor(model => model.contactname, new { htmlattributes = new { @class = "form-control" } })
+                    @html.validationmessagefor(model => model.contactname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @html.labelfor(model => model.contactaddress, htmlattributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @html.editorfor(model => model.contactaddress, new { htmlattributes = new { @class = "form-control" } })
+                    @html.validationmessagefor(model => model.contactaddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @html.labelfor(model => model.contactaddress, htmlattributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @html.editorfor(model => model.currencyid, new { htmlattributes = new {
+               } })
+                    @html.validationmessagefor(model => model.contactaddress, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        }*@

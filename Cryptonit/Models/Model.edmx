@@ -68,7 +68,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ContactAddress" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="CurrencyId" Type="int" Nullable="false" />
           <Property Name="ContactName" Type="varchar" MaxLength="50" Nullable="false" />
@@ -214,7 +214,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserConta__Curre__3C34F16F">
+        <Association Name="FK__UserConta__Curre__634EBE90">
           <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
           <End Role="UserContact" Type="Self.UserContact" Multiplicity="*" />
           <ReferentialConstraint>
@@ -226,7 +226,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserConta__UserI__3B40CD36">
+        <Association Name="FK__UserConta__UserI__625A9A57">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="UserContact" Type="Self.UserContact" Multiplicity="*" />
           <ReferentialConstraint>
@@ -313,11 +313,11 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserConta__Curre__3C34F16F" Association="Self.FK__UserConta__Curre__3C34F16F">
+          <AssociationSet Name="FK__UserConta__Curre__634EBE90" Association="Self.FK__UserConta__Curre__634EBE90">
             <End Role="Currency" EntitySet="Currency" />
             <End Role="UserContact" EntitySet="UserContact" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserConta__UserI__3B40CD36" Association="Self.FK__UserConta__UserI__3B40CD36">
+          <AssociationSet Name="FK__UserConta__UserI__625A9A57" Association="Self.FK__UserConta__UserI__625A9A57">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserContact" EntitySet="UserContact" />
           </AssociationSet>

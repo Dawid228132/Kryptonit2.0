@@ -25,12 +25,65 @@ namespace Cryptonit.Controllers
         {
             if (!Premission())
                 return Redirect("~/User/NoPremission");
+
             return View();
+            
+        }
+        [HttpPost]
+        public ActionResult AddNewAddress(String ContactName, String ContactAddress, String Currency)
+        {
+            using (Entities db = new Entities())
+            {
+                
+                UserContact contact = new UserContact();
+                foreach(Currency c in db.Currency.ToArray())
+                {
+                    if (c.Name == Currency)
+                    {
+                        contact.CurrencyId = c.Id;
+                        break;
+                    }
+                       
+                }
+              
+                contact.ContactAddress = ContactAddress;
+                contact.ContactName = ContactName;
+                contact.UserId = (int) Session["UserID"];
+                db.UserContact.Add(contact);
+                db.SaveChanges();
+
+                ViewBag.Message = "success";
+
+            }
+           
+            return View();
+
+        }
+        [HttpPost]
+        public ActionResult Delete()
+        {
+            
+            var id = Url.RequestContext.RouteData.Values["id"];
+            if(id!=null)
+            using (Entities db = new Entities())
+            {
+                    int i = int.Parse((string) id);
+                    UserContact uc = db.UserContact.Find(i);
+                    if(uc!=null)
+                        { 
+                        db.UserContact.Remove(uc);
+                        db.SaveChanges();
+                        }
+                    }
+            return Redirect("~/Wallet/MyAddresses");
+
         }
         public ActionResult MyAddresses()
         {
+            Session["UserId"] = 11;
             if (!Premission())
                 return Redirect("~/User/NoPremission");
+
             return View();
         }
 
@@ -38,6 +91,11 @@ namespace Cryptonit.Controllers
         {
             if (!Premission())
                 return Redirect("~/User/NoPremission");
+            var address = Url.RequestContext.RouteData.Values["id"];
+            if (address != null)
+            {
+                Session["SendAddress"] = address;
+            }
             return View();
         }
 
