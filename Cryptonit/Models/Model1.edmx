@@ -4,14 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CryptonitModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CryptonitModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Address" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="AddressHash" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="CurrencyId" Type="int" Nullable="false" />
           <Property Name="PublicKeyId" Type="int" Nullable="false" />
           <Property Name="SignatureId" Type="int" Nullable="false" />
@@ -54,7 +54,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="AddressId" Type="int" Nullable="false" />
-          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="TransactionStatusId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TransactionStatus">
@@ -76,11 +76,11 @@
         </EntityType>
         <EntityType Name="UserCurrency">
           <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="CurrencyId" />
+            <PropertyRef Name="Currency_Id" />
+            <PropertyRef Name="Users_Id" />
           </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="CurrencyId" Type="int" Nullable="false" />
+          <Property Name="Currency_Id" Type="int" Nullable="false" />
+          <Property Name="Users_Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -238,7 +238,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserCurre__Curre__05D8E0BE">
+        <Association Name="FK_UserCurrency_Currency">
           <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
           <End Role="UserCurrency" Type="Self.UserCurrency" Multiplicity="*" />
           <ReferentialConstraint>
@@ -246,11 +246,11 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="UserCurrency">
-              <PropertyRef Name="CurrencyId" />
+              <PropertyRef Name="Currency_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserCurre__UserI__04E4BC85">
+        <Association Name="FK_UserCurrency_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="UserCurrency" Type="Self.UserCurrency" Multiplicity="*" />
           <ReferentialConstraint>
@@ -258,7 +258,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="UserCurrency">
-              <PropertyRef Name="UserId" />
+              <PropertyRef Name="Users_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -321,37 +321,19 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserContact" EntitySet="UserContact" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserCurre__Curre__05D8E0BE" Association="Self.FK__UserCurre__Curre__05D8E0BE">
+          <AssociationSet Name="FK_UserCurrency_Currency" Association="Self.FK_UserCurrency_Currency">
             <End Role="Currency" EntitySet="Currency" />
             <End Role="UserCurrency" EntitySet="UserCurrency" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserCurre__UserI__04E4BC85" Association="Self.FK__UserCurre__UserI__04E4BC85">
+          <AssociationSet Name="FK_UserCurrency_Users" Association="Self.FK_UserCurrency_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserCurrency" EntitySet="UserCurrency" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CryptonitModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CurrencyId" Type="Int32" Nullable="false" />
-          <Property Name="PublicKeyId" Type="Int32" Nullable="false" />
-          <Property Name="SignatureId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Currency" Relationship="Self.FK__Address__Currenc__51300E55" FromRole="Address" ToRole="Currency" />
-          <NavigationProperty Name="Currency1" Relationship="Self.FK__Address__Currenc__531856C7" FromRole="Address" ToRole="Currency" />
-          <NavigationProperty Name="PublicKey" Relationship="Self.FK__Address__PublicK__5224328E" FromRole="Address" ToRole="PublicKey" />
-          <NavigationProperty Name="PublicKey1" Relationship="Self.FK__Address__PublicK__540C7B00" FromRole="Address" ToRole="PublicKey" />
-          <NavigationProperty Name="Signature" Relationship="Self.FK__Address__Signatu__4F47C5E3" FromRole="Address" ToRole="Signature" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Address__UserId__503BEA1C" FromRole="Address" ToRole="Users" />
-        </EntityType>
         <EntityType Name="Currency">
           <Key>
             <PropertyRef Name="Id" />
@@ -359,11 +341,11 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Abbreviation" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Address__Currenc__51300E55" FromRole="Currency" ToRole="Address" />
-          <NavigationProperty Name="Address1" Relationship="Self.FK__Address__Currenc__531856C7" FromRole="Currency" ToRole="Address" />
           <NavigationProperty Name="Recipient" Relationship="Self.FK__Recipient__Curre__74AE54BC" FromRole="Currency" ToRole="Recipient" />
           <NavigationProperty Name="UserContact" Relationship="Self.FK__UserConta__Curre__3C34F16F" FromRole="Currency" ToRole="UserContact" />
           <NavigationProperty Name="Users" Relationship="Self.UserCurrency" FromRole="Currency" ToRole="Users" />
+          <NavigationProperty Name="Address" Relationship="CryptonitModel.FK__Address__Currenc__51300E55" FromRole="Currency" ToRole="Address" />
+          <NavigationProperty Name="Address1" Relationship="CryptonitModel.FK__Address__Currenc__531856C7" FromRole="Currency" ToRole="Address" />
         </EntityType>
         <EntityType Name="PublicKey">
           <Key>
@@ -371,9 +353,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HashCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Address__PublicK__5224328E" FromRole="PublicKey" ToRole="Address" />
-          <NavigationProperty Name="Address1" Relationship="Self.FK__Address__PublicK__540C7B00" FromRole="PublicKey" ToRole="Address" />
           <NavigationProperty Name="Recipient" Relationship="Self.FK__Recipient__Publi__75A278F5" FromRole="PublicKey" ToRole="Recipient" />
+          <NavigationProperty Name="Address" Relationship="CryptonitModel.FK__Address__PublicK__5224328E" FromRole="PublicKey" ToRole="Address" />
+          <NavigationProperty Name="Address1" Relationship="CryptonitModel.FK__Address__PublicK__540C7B00" FromRole="PublicKey" ToRole="Address" />
         </EntityType>
         <EntityType Name="Recipient">
           <Key>
@@ -392,7 +374,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HashCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Address__Signatu__4F47C5E3" FromRole="Signature" ToRole="Address" />
+          <NavigationProperty Name="Address" Relationship="CryptonitModel.FK__Address__Signatu__4F47C5E3" FromRole="Signature" ToRole="Address" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -401,7 +383,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="AddressId" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TransactionStatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TransactionStatus" Relationship="Self.FK__Transacti__Trans__03F0984C" FromRole="Transaction" ToRole="TransactionStatus" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Transacti__UserI__02084FDA" FromRole="Transaction" ToRole="Users" />
@@ -437,83 +419,11 @@
           <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="salt" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Address__UserId__503BEA1C" FromRole="Users" ToRole="Address" />
           <NavigationProperty Name="Transaction" Relationship="Self.FK__Transacti__UserI__02084FDA" FromRole="Users" ToRole="Transaction" />
           <NavigationProperty Name="UserContact" Relationship="Self.FK__UserConta__UserI__3B40CD36" FromRole="Users" ToRole="UserContact" />
           <NavigationProperty Name="Currency" Relationship="Self.UserCurrency" FromRole="Users" ToRole="Currency" />
+          <NavigationProperty Name="Address" Relationship="CryptonitModel.FK__Address__UserId__503BEA1C" FromRole="Users" ToRole="Address" />
         </EntityType>
-        <Association Name="FK__Address__Currenc__51300E55">
-          <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currency">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="CurrencyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Address__Currenc__531856C7">
-          <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Currency">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="CurrencyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Address__PublicK__5224328E">
-          <End Role="PublicKey" Type="Self.PublicKey" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PublicKey">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="PublicKeyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Address__PublicK__540C7B00">
-          <End Role="PublicKey" Type="Self.PublicKey" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PublicKey">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="PublicKeyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Address__Signatu__4F47C5E3">
-          <End Role="Signature" Type="Self.Signature" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Signature">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="SignatureId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Address__UserId__503BEA1C">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Recipient__Curre__74AE54BC">
           <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
           <End Role="Recipient" Type="Self.Recipient" Multiplicity="*" />
@@ -591,7 +501,6 @@
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
         </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Address" EntityType="Self.Address" />
           <EntitySet Name="Currency" EntityType="Self.Currency" />
           <EntitySet Name="PublicKey" EntityType="Self.PublicKey" />
           <EntitySet Name="Recipient" EntityType="Self.Recipient" />
@@ -600,30 +509,6 @@
           <EntitySet Name="TransactionStatus" EntityType="Self.TransactionStatus" />
           <EntitySet Name="UserContact" EntityType="Self.UserContact" />
           <EntitySet Name="Users" EntityType="Self.Users" />
-          <AssociationSet Name="FK__Address__Currenc__51300E55" Association="Self.FK__Address__Currenc__51300E55">
-            <End Role="Currency" EntitySet="Currency" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Address__Currenc__531856C7" Association="Self.FK__Address__Currenc__531856C7">
-            <End Role="Currency" EntitySet="Currency" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Address__PublicK__5224328E" Association="Self.FK__Address__PublicK__5224328E">
-            <End Role="PublicKey" EntitySet="PublicKey" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Address__PublicK__540C7B00" Association="Self.FK__Address__PublicK__540C7B00">
-            <End Role="PublicKey" EntitySet="PublicKey" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Address__Signatu__4F47C5E3" Association="Self.FK__Address__Signatu__4F47C5E3">
-            <End Role="Signature" EntitySet="Signature" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Address__UserId__503BEA1C" Association="Self.FK__Address__UserId__503BEA1C">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
           <AssociationSet Name="FK__Recipient__Curre__74AE54BC" Association="Self.FK__Recipient__Curre__74AE54BC">
             <End Role="Currency" EntitySet="Currency" />
             <End Role="Recipient" EntitySet="Recipient" />
@@ -652,25 +537,127 @@
             <End Role="Currency" EntitySet="Currency" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Address" EntityType="CryptonitModel.Address" />
+          <AssociationSet Name="FK__Address__Currenc__51300E55" Association="CryptonitModel.FK__Address__Currenc__51300E55">
+            <End Role="Currency" EntitySet="Currency" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Address__Currenc__531856C7" Association="CryptonitModel.FK__Address__Currenc__531856C7">
+            <End Role="Currency" EntitySet="Currency" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Address__PublicK__5224328E" Association="CryptonitModel.FK__Address__PublicK__5224328E">
+            <End Role="PublicKey" EntitySet="PublicKey" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Address__PublicK__540C7B00" Association="CryptonitModel.FK__Address__PublicK__540C7B00">
+            <End Role="PublicKey" EntitySet="PublicKey" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Address__Signatu__4F47C5E3" Association="CryptonitModel.FK__Address__Signatu__4F47C5E3">
+            <End Role="Signature" EntitySet="Signature" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Address__UserId__503BEA1C" Association="CryptonitModel.FK__Address__UserId__503BEA1C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AddressHash" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CurrencyId" Type="Int32" Nullable="false" />
+          <Property Name="PublicKeyId" Type="Int32" Nullable="false" />
+          <Property Name="SignatureId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Currency" Relationship="CryptonitModel.FK__Address__Currenc__51300E55" FromRole="Address" ToRole="Currency" />
+          <NavigationProperty Name="Currency1" Relationship="CryptonitModel.FK__Address__Currenc__531856C7" FromRole="Address" ToRole="Currency" />
+          <NavigationProperty Name="PublicKey" Relationship="CryptonitModel.FK__Address__PublicK__5224328E" FromRole="Address" ToRole="PublicKey" />
+          <NavigationProperty Name="PublicKey1" Relationship="CryptonitModel.FK__Address__PublicK__540C7B00" FromRole="Address" ToRole="PublicKey" />
+          <NavigationProperty Name="Signature" Relationship="CryptonitModel.FK__Address__Signatu__4F47C5E3" FromRole="Address" ToRole="Signature" />
+          <NavigationProperty Name="Users" Relationship="CryptonitModel.FK__Address__UserId__503BEA1C" FromRole="Address" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK__Address__Currenc__51300E55">
+          <End Type="CryptonitModel.Currency" Role="Currency" Multiplicity="1" />
+          <End Type="CryptonitModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="CurrencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Address__Currenc__531856C7">
+          <End Type="CryptonitModel.Currency" Role="Currency" Multiplicity="1" />
+          <End Type="CryptonitModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="CurrencyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Address__PublicK__5224328E">
+          <End Type="CryptonitModel.PublicKey" Role="PublicKey" Multiplicity="1" />
+          <End Type="CryptonitModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PublicKey">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="PublicKeyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Address__PublicK__540C7B00">
+          <End Type="CryptonitModel.PublicKey" Role="PublicKey" Multiplicity="1" />
+          <End Type="CryptonitModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PublicKey">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="PublicKeyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Address__Signatu__4F47C5E3">
+          <End Type="CryptonitModel.Signature" Role="Signature" Multiplicity="1" />
+          <End Type="CryptonitModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Signature">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="SignatureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Address__UserId__503BEA1C">
+          <End Type="CryptonitModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="CryptonitModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CryptonitModelStoreContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="Address">
-            <EntityTypeMapping TypeName="CryptonitModel.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Address1" ColumnName="Address" />
-                <ScalarProperty Name="CurrencyId" ColumnName="CurrencyId" />
-                <ScalarProperty Name="PublicKeyId" ColumnName="PublicKeyId" />
-                <ScalarProperty Name="SignatureId" ColumnName="SignatureId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Currency">
             <EntityTypeMapping TypeName="CryptonitModel.Currency">
               <MappingFragment StoreEntitySet="Currency">
@@ -750,13 +737,25 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="UserCurrency" TypeName="CryptonitModel.UserCurrency" StoreEntitySet="UserCurrency">
-            <EndProperty Name="Currency">
-              <ScalarProperty Name="Id" ColumnName="CurrencyId" />
-            </EndProperty>
             <EndProperty Name="Users">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
+              <ScalarProperty Name="Id" ColumnName="Users_Id" />
+            </EndProperty>
+            <EndProperty Name="Currency">
+              <ScalarProperty Name="Id" ColumnName="Currency_Id" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Address">
+            <EntityTypeMapping TypeName="CryptonitModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="SignatureId" ColumnName="SignatureId" />
+                <ScalarProperty Name="PublicKeyId" ColumnName="PublicKeyId" />
+                <ScalarProperty Name="CurrencyId" ColumnName="CurrencyId" />
+                <ScalarProperty Name="AddressHash" ColumnName="AddressHash" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

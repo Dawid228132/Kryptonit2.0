@@ -12,7 +12,8 @@ namespace Cryptonit.Controllers
 {
     public class UserController : Controller
     {
-        
+
+        Blockcypher bc = new Blockcypher("1b4ed7ee7ddb4f918e93717945474e4e");
 
         public ActionResult Index()
         {
@@ -31,7 +32,7 @@ namespace Cryptonit.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Register( Users user)
+        public async Task<ActionResult> Register( Users user)
         {
            if(ModelState.IsValid)
             {
@@ -57,9 +58,35 @@ namespace Cryptonit.Controllers
                         user.password = HashPassword.hash(user.password,user.salt);
                         user.confirmPassword= HashPassword.hash(user.confirmPassword,user.salt);
                         db.Users.Add(user);
-                        db.SaveChanges();
+                        // db.SaveChanges();
                         ViewBag.Message = "success";
-                        
+
+                        List<string> addressInfo = await GenerateAddress();
+
+                        PublicKey publicKey = new PublicKey();
+                        publicKey.HashCode = addressInfo[1];
+                        db.PublicKey.Add(publicKey);
+
+                        Signature signature = new Signature();
+                        signature.HashCode = addressInfo[2];
+                        db.Signature.Add(signature);
+                        db.SaveChanges();
+
+                        int lastUsersId = 0;
+                        foreach (Users u in db.Users.ToArray())
+                        {
+                            lastUsersId += 1;
+                        }
+
+                        Address address = new Address();
+                        address.UserId = lastUsersId;
+                        address.AddressHash = addressInfo[0];
+                        address.CurrencyId = 1;
+                        address.PublicKeyId = lastUsersId;
+                        address.SignatureId = lastUsersId;
+
+                        db.Address.Add(address);
+                        db.SaveChanges();
                     }
                 }
                 ModelState.Clear();
@@ -72,7 +99,6 @@ namespace Cryptonit.Controllers
         {
             List<string> listOfKeys = new List<string>();
             
-            Blockcypher bc = new Blockcypher("1b4ed7ee7ddb4f918e93717945474e4e");
             var request = await bc.GenerateAddress();
 
             string address = request.Address;
@@ -89,21 +115,19 @@ namespace Cryptonit.Controllers
 
             return listOfKeys;
         }
-       [NonAction]
+        [NonAction]
         public bool IsEmailExist(string email)
         {
-  
-                    using (Entities db = new Entities())
+            using (Entities db = new Entities())
+            {
+                foreach (Users u in db.Users.ToArray())
                 {
-                
-                    foreach(Users u in db.Users.ToArray())
-                    {
-                        if (u.email.Equals(email))
-                            return true;
-                    }
-
-                    return false;
+                    if (u.email.Equals(email))
+                        return true;
                 }
+
+                return false;    
+            }
         }
         public bool IsLoginExist(string login)
         {
@@ -137,7 +161,8 @@ namespace Cryptonit.Controllers
                             return Redirect("~/Wallet/Index");
                         }
                     }  
-                }
+            }
+            
 
             ModelState.AddModelError("LoginError", "Login or Password is wrong.");
             return View();
